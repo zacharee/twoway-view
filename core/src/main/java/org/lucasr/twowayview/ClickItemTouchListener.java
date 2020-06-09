@@ -1,19 +1,18 @@
 package org.lucasr.twowayview;
 
 import android.content.Context;
-import android.os.Build;
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.OnItemTouchListener;
+import androidx.core.view.GestureDetectorCompat;
+import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 
-abstract class ClickItemTouchListener implements OnItemTouchListener {
+abstract class ClickItemTouchListener implements RecyclerView.OnItemTouchListener {
     private static final String LOGTAG = "ClickItemTouchListener";
 
-    private final GestureDetectorCompat mGestureDetector;
+    private final GestureDetector mGestureDetector;
 
     ClickItemTouchListener(RecyclerView hostView) {
         mGestureDetector = new ItemClickGestureDetector(hostView.getContext(),
@@ -21,11 +20,7 @@ abstract class ClickItemTouchListener implements OnItemTouchListener {
     }
 
     private boolean isAttachedToWindow(RecyclerView hostView) {
-        if (Build.VERSION.SDK_INT >= 19) {
-            return hostView.isAttachedToWindow();
-        } else {
-            return (hostView.getHandler() != null);
-        }
+        return hostView.isAttachedToWindow();
     }
 
     private boolean hasAdapter(RecyclerView hostView) {
@@ -51,7 +46,7 @@ abstract class ClickItemTouchListener implements OnItemTouchListener {
     abstract boolean performItemClick(RecyclerView parent, View view, int position, long id);
     abstract boolean performItemLongClick(RecyclerView parent, View view, int position, long id);
 
-    private class ItemClickGestureDetector extends GestureDetectorCompat {
+    private class ItemClickGestureDetector extends GestureDetector {
         private final ItemClickGestureListener mGestureListener;
 
         public ItemClickGestureDetector(Context context, ItemClickGestureListener listener) {
@@ -63,7 +58,7 @@ abstract class ClickItemTouchListener implements OnItemTouchListener {
         public boolean onTouchEvent(MotionEvent event) {
             final boolean handled = super.onTouchEvent(event);
 
-            final int action = event.getAction() & MotionEventCompat.ACTION_MASK;
+            final int action = event.getAction() & MotionEvent.ACTION_MASK;
             if (action == MotionEvent.ACTION_UP) {
                 mGestureListener.dispatchSingleTapUpIfNeeded(event);
             }
@@ -113,7 +108,7 @@ abstract class ClickItemTouchListener implements OnItemTouchListener {
             if (mTargetChild != null) {
                 mTargetChild.setPressed(false);
 
-                final int position = mHostView.getChildPosition(mTargetChild);
+                final int position = mHostView.getChildLayoutPosition(mTargetChild);
                 final long id = mHostView.getAdapter().getItemId(position);
                 handled = performItemClick(mHostView, mTargetChild, position, id);
 
@@ -141,7 +136,7 @@ abstract class ClickItemTouchListener implements OnItemTouchListener {
                 return;
             }
 
-            final int position = mHostView.getChildPosition(mTargetChild);
+            final int position = mHostView.getChildLayoutPosition(mTargetChild);
             final long id = mHostView.getAdapter().getItemId(position);
             final boolean handled = performItemLongClick(mHostView, mTargetChild, position, id);
 

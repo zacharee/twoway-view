@@ -17,11 +17,12 @@
 package org.lucasr.twowayview.sample;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import org.lucasr.twowayview.TwoWayLayoutManager;
 import org.lucasr.twowayview.widget.TwoWayView;
@@ -110,15 +111,13 @@ public class LayoutAdapter extends RecyclerView.Adapter<LayoutAdapter.SimpleView
             final StaggeredGridLayoutManager.LayoutParams lp =
                     (StaggeredGridLayoutManager.LayoutParams) itemView.getLayoutParams();
 
+            lp.span = span;
             if (!isVertical) {
-                lp.span = span;
                 lp.width = size;
-                itemView.setLayoutParams(lp);
             } else {
-                lp.span = span;
                 lp.height = size;
-                itemView.setLayoutParams(lp);
             }
+            itemView.setLayoutParams(lp);
         } else if (mLayoutId == R.layout.layout_spannable_grid) {
             final SpannableGridLayoutManager.LayoutParams lp =
                     (SpannableGridLayoutManager.LayoutParams) itemView.getLayoutParams();

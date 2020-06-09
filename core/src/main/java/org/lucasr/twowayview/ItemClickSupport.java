@@ -1,9 +1,10 @@
 package org.lucasr.twowayview;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.HapticFeedbackConstants;
 import android.view.SoundEffectConstants;
 import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemClickSupport {
     /**
@@ -135,5 +136,8 @@ public class ItemClickSupport {
 
             return false;
         }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {}
     }
 }

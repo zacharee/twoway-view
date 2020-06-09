@@ -3,16 +3,16 @@ package org.lucasr.twowayview.widget;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Rect;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ItemDecoration;
 import android.util.AttributeSet;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 /**
- * {@link android.support.v7.widget.RecyclerView.ItemDecoration} that applies a
+ * {@link RecyclerView.ItemDecoration} that applies a
  * vertical and horizontal spacing between items of the target
- * {@link android.support.v7.widget.RecyclerView}.
+ * {@link RecyclerView}.
  */
-public class SpacingItemDecoration extends ItemDecoration {
+public class SpacingItemDecoration extends RecyclerView.ItemDecoration {
     private final ItemSpacingOffsets mItemSpacing;
 
     public SpacingItemDecoration(Context context, AttributeSet attrs) {

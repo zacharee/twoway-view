@@ -21,8 +21,6 @@
 
 package org.lucasr.twowayview.widget;
 
-import android.util.Log;
-
 import java.util.Arrays;
 
 import org.lucasr.twowayview.widget.BaseLayoutManager.ItemEntry;
